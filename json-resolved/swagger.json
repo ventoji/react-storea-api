@@ -1,0 +1,226 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "This is a simple API",
+    "version" : "1.0.0",
+    "title" : "Store React API",
+    "contact" : {
+      "email" : "hello@ventoji.es"
+    },
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "host" : "virtserver.swaggerhub.com",
+  "basePath" : "/ventoji7/storereact/1.0.0",
+  "tags" : [ {
+    "name" : "auths",
+    "description" : "Operation available for users"
+  }, {
+    "name" : "baintree",
+    "description" : "Secure routes for paymanets"
+  }, {
+    "name" : "categories",
+    "description" : "Routes for product categories"
+  }, {
+    "name" : "orders",
+    "description" : "Operation for products orders"
+  }, {
+    "name" : "products",
+    "description" : "Operation available for handling products on the store"
+  } ],
+  "schemes" : [ "https" ],
+  "paths" : {
+    "/signup" : {
+      "post" : {
+        "tags" : [ "auths" ],
+        "summary" : "Register a new user",
+        "description" : "Adds a new user account for the online store",
+        "operationId" : "addInventory",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "UserItem",
+          "description" : "New user added",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/UserSignup"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "user created"
+          },
+          "400" : {
+            "description" : "invalid email, object invalid"
+          },
+          "409" : {
+            "description" : "an existing user already exists"
+          }
+        }
+      }
+    },
+    "/signin" : {
+      "post" : {
+        "tags" : [ "auths" ],
+        "summary" : "Login for a  user",
+        "description" : "Access for a user to his/her account",
+        "operationId" : "loginUser",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "Email, Password",
+          "description" : "User email to login",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/UserLogin"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "user created"
+          },
+          "400" : {
+            "description" : "invalid email, object invalid"
+          },
+          "409" : {
+            "description" : "an existing user already exists"
+          }
+        }
+      }
+    },
+    "/signout" : {
+      "get" : {
+        "tags" : [ "auths" ],
+        "summary" : "Login for a  user",
+        "description" : "Exit login session for a user",
+        "operationId" : "logoutUser",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "201" : {
+            "description" : "session closed successfuly"
+          },
+          "500" : {
+            "description" : "internal server error"
+          }
+        }
+      }
+    },
+    "/reset" : {
+      "post" : {
+        "tags" : [ "auths" ],
+        "summary" : "Login for a  user",
+        "description" : "Access for a user to his/her account",
+        "operationId" : "resetPassUser",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "email",
+          "description" : "email for the user account to be reset",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/UserLogin"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "email sent"
+          },
+          "400" : {
+            "description" : "invalid email"
+          }
+        }
+      }
+    },
+    "/category/create" : {
+      "post" : {
+        "tags" : [ "categories" ],
+        "summary" : "Create a category only for a user with admin role",
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "A category object"
+          }
+        }
+      }
+    },
+    "/category" : {
+      "get" : {
+        "tags" : [ "categories" ],
+        "summary" : "Returns a product category by ID.",
+        "description" : "Get a product category",
+        "operationId" : "productCategory",
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "A Category object.",
+            "schema" : {
+              "$ref" : "#/definitions/ProductCategory"
+            }
+          },
+          "404" : {
+            "description" : "A category with the specified ID was not found"
+          },
+          "default" : {
+            "description" : "Unexpected error"
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "UserSignup" : {
+      "type" : "object",
+      "required" : [ "email", "id", "name" ],
+      "properties" : {
+        "id" : {
+          "type" : "string",
+          "format" : "uuid",
+          "example" : "d290f1ee-6c54-4b01-90e6-d701748f0851"
+        },
+        "name" : {
+          "type" : "string",
+          "example" : "Widget Adapter"
+        },
+        "email" : {
+          "type" : "string",
+          "example" : "hello@gmai.com"
+        }
+      }
+    },
+    "UserLogin" : {
+      "type" : "object",
+      "required" : [ "email", "password" ],
+      "properties" : {
+        "email" : {
+          "type" : "string",
+          "example" : "hello@gmail.com"
+        },
+        "password" : {
+          "type" : "string",
+          "example" : "xxxxxx"
+        }
+      }
+    },
+    "ProductCategory" : {
+      "type" : "object",
+      "required" : [ "id", "name" ],
+      "properties" : {
+        "id" : {
+          "type" : "string",
+          "example" : "fsfdhdth"
+        },
+        "name" : {
+          "type" : "string",
+          "example" : "php"
+        }
+      }
+    }
+  }
+}
