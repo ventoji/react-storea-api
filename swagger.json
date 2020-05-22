@@ -131,23 +131,43 @@
         }
       }
     },
-    "/category/create" : {
+    "/category/create/{categoryId}" : {
       "post" : {
         "tags" : [ "categories" ],
         "summary" : "Create a category only for a user with admin role",
+        "parameters" : [ {
+          "name" : "categoryId",
+          "in" : "path",
+          "description" : "Product category ID",
+          "required" : true,
+          "type" : "string"
+        } ],
         "responses" : {
           "200" : {
-            "description" : "A category object"
+            "description" : "A category object was created",
+            "schema" : {
+              "$ref" : "#/definitions/ProductCategory"
+            }
+          },
+          "500" : {
+            "description" : "Internal server error"
           }
         }
       }
     },
-    "/category" : {
+    "/category/{categoryId}" : {
       "get" : {
         "tags" : [ "categories" ],
         "summary" : "Returns a product category by ID.",
         "operationId" : "productCategory",
         "description" : "Get a product category",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "categoryId",
+          "description" : "product category ID",
+          "required" : true,
+          "type" : "string"
+        } ],
         "responses" : {
           "200" : {
             "description" : "A Category object.",
