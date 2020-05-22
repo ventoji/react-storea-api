@@ -151,6 +151,9 @@
           },
           "500" : {
             "description" : "Internal server error"
+          },
+          "default" : {
+            "description" : "Unexpected error"
           }
         }
       }
