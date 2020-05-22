@@ -286,6 +286,29 @@
           }
         }
       }
+    },
+    "/order/status-value/{userId}" : {
+      "get" : {
+        "tags" : [ "orders" ],
+        "summary" : "Return the status of a order.",
+        "operationId" : "orderListStatus",
+        "description" : "Return the status of a order.",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "userId",
+          "description" : "user ID",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "A list of all categories was feteched correctly."
+          },
+          "default" : {
+            "description" : "Unexpected error"
+          }
+        }
+      }
     }
   },
   "definitions" : {
