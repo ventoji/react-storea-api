@@ -138,25 +138,46 @@
         }
       }
     },
-    "/category/create" : {
+    "/category/create/{categoryId}" : {
       "post" : {
         "tags" : [ "categories" ],
         "summary" : "Create a category only for a user with admin role",
-        "parameters" : [ ],
+        "parameters" : [ {
+          "name" : "categoryId",
+          "in" : "path",
+          "description" : "Product category ID",
+          "required" : true,
+          "type" : "string"
+        } ],
         "responses" : {
           "200" : {
-            "description" : "A category object"
+            "description" : "A category object was created",
+            "schema" : {
+              "$ref" : "#/definitions/ProductCategory"
+            }
+          },
+          "500" : {
+            "description" : "Internal server error"
+          },
+          "default" : {
+            "description" : "Unexpected error"
           }
         }
       }
     },
-    "/category" : {
+    "/category/{categoryId}" : {
       "get" : {
         "tags" : [ "categories" ],
         "summary" : "Returns a product category by ID.",
         "description" : "Get a product category",
         "operationId" : "productCategory",
-        "parameters" : [ ],
+        "parameters" : [ {
+          "name" : "categoryId",
+          "in" : "path",
+          "description" : "product category ID",
+          "required" : true,
+          "type" : "string"
+        } ],
         "responses" : {
           "200" : {
             "description" : "A Category object.",
@@ -166,6 +187,171 @@
           },
           "404" : {
             "description" : "A category with the specified ID was not found"
+          },
+          "default" : {
+            "description" : "Unexpected error"
+          }
+        }
+      }
+    },
+    "/category/{categoryId}/{userId}" : {
+      "put" : {
+        "tags" : [ "categories" ],
+        "summary" : "Returns a product category by ID.",
+        "description" : "Get a product category",
+        "parameters" : [ {
+          "name" : "categoryId",
+          "in" : "path",
+          "description" : "update product category ID",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "userId",
+          "in" : "path",
+          "description" : "user admin ID",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "A category was successfuly updated.",
+            "schema" : {
+              "$ref" : "#/definitions/ProductCategory"
+            }
+          },
+          "404" : {
+            "description" : "A category with the specified ID was not found"
+          },
+          "default" : {
+            "description" : "Unexpected error"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "categories" ],
+        "summary" : "Delete a product category by ID.",
+        "description" : "Delete a product by category ID.",
+        "parameters" : [ {
+          "name" : "categoryId",
+          "in" : "path",
+          "description" : "update product category ID",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "userId",
+          "in" : "path",
+          "description" : "user admin ID",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "A category was successfuly deleted"
+          },
+          "404" : {
+            "description" : "A category with the specified ID was not found"
+          },
+          "default" : {
+            "description" : "Unexpected error"
+          }
+        }
+      }
+    },
+    "/order/create/{userId}" : {
+      "post" : {
+        "tags" : [ "orders" ],
+        "summary" : "Create a order when a user buy a product",
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "path",
+          "description" : "User ID",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "An order was created",
+            "schema" : {
+              "$ref" : "#/definitions/OrderSchema"
+            }
+          },
+          "500" : {
+            "description" : "Internal server error"
+          },
+          "default" : {
+            "description" : "Unexpected error"
+          }
+        }
+      }
+    },
+    "/order/list/{userId}" : {
+      "get" : {
+        "tags" : [ "orders" ],
+        "summary" : "Returns a list of all orders.",
+        "description" : "Return a list of all orders",
+        "operationId" : "orderList",
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "path",
+          "description" : "user ID",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "A list of all categories was feteched correctly."
+          },
+          "default" : {
+            "description" : "Unexpected error"
+          }
+        }
+      }
+    },
+    "/order/status-value/{userId}" : {
+      "get" : {
+        "tags" : [ "orders" ],
+        "summary" : "Return the status of a order.",
+        "description" : "Return the status of a order.",
+        "operationId" : "orderListStatus",
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "path",
+          "description" : "user ID",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "a status order was returned correctly."
+          },
+          "default" : {
+            "description" : "Unexpected error"
+          }
+        }
+      }
+    },
+    "/order/{orderId}/status/{userId}" : {
+      "put" : {
+        "tags" : [ "orders" ],
+        "summary" : "Change the status of a order.",
+        "description" : "Change the status of a order.",
+        "operationId" : "orderStatusChange",
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "path",
+          "description" : "user ID",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "orderId",
+          "in" : "path",
+          "description" : "order ID",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "A status order was successfuly changed."
           },
           "default" : {
             "description" : "Unexpected error"
@@ -219,6 +405,31 @@
         "name" : {
           "type" : "string",
           "example" : "php"
+        }
+      }
+    },
+    "OrderSchema" : {
+      "type" : "object",
+      "required" : [ "amount", "id", "status", "transaction_id", "user" ],
+      "properties" : {
+        "id" : {
+          "type" : "string",
+          "example" : "fsfdhdth"
+        },
+        "status" : {
+          "type" : "string",
+          "example" : "not proccesed"
+        },
+        "transaction_id" : {
+          "type" : "string",
+          "example" : "jj44fdfd89"
+        },
+        "amount" : {
+          "type" : "integer",
+          "example" : 3
+        },
+        "user" : {
+          "$ref" : "#/definitions/UserLogin"
         }
       }
     }
