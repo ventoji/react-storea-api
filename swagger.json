@@ -236,6 +236,33 @@
           }
         }
       }
+    },
+    "/order/create/{userId}" : {
+      "post" : {
+        "tags" : [ "orders" ],
+        "summary" : "Create a order when a user buy a product",
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "path",
+          "description" : "User ID",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "An order was created",
+            "schema" : {
+              "$ref" : "#/definitions/OrderSchema"
+            }
+          },
+          "500" : {
+            "description" : "Internal server error"
+          },
+          "default" : {
+            "description" : "Unexpected error"
+          }
+        }
+      }
     }
   },
   "definitions" : {
@@ -283,6 +310,32 @@
         "name" : {
           "type" : "string",
           "example" : "php"
+        }
+      }
+    },
+    "OrderSchema" : {
+      "type" : "object",
+      "required" : [ "id", "status", "transaction_id", "amount", "user" ],
+      "properties" : {
+        "id" : {
+          "type" : "string",
+          "example" : "fsfdhdth"
+        },
+        "status" : {
+          "type" : "string",
+          "example" : "not proccesed"
+        },
+        "transaction_id" : {
+          "type" : "string",
+          "example" : "jj44fdfd89"
+        },
+        "amount" : {
+          "type" : "integer",
+          "example" : 3
+        },
+        "user" : {
+          "type" : "object",
+          "$ref" : "#/definitions/UserLogin"
         }
       }
     }
