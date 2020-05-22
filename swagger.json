@@ -263,6 +263,29 @@
           }
         }
       }
+    },
+    "/order/list/{userId}" : {
+      "get" : {
+        "tags" : [ "orders" ],
+        "summary" : "Returns a list of all orders.",
+        "operationId" : "orderList",
+        "description" : "Return a list of all orders",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "userId",
+          "description" : "user ID",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "A list of all categories was feteched correctly."
+          },
+          "default" : {
+            "description" : "Unexpected error"
+          }
+        }
+      }
     }
   },
   "definitions" : {
