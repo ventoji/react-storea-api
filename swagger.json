@@ -186,6 +186,56 @@
           }
         }
       }
+    },
+    "/category/{categoryId}/{userId}" : {
+      "parameters" : [ {
+        "name" : "categoryId",
+        "in" : "path",
+        "description" : "update product category ID",
+        "required" : true,
+        "type" : "string"
+      }, {
+        "name" : "userId",
+        "in" : "path",
+        "description" : "user admin ID",
+        "required" : true,
+        "type" : "string"
+      } ],
+      "put" : {
+        "tags" : [ "categories" ],
+        "summary" : "Returns a product category by ID.",
+        "description" : "Get a product category",
+        "responses" : {
+          "200" : {
+            "description" : "A category was successfuly updated.",
+            "schema" : {
+              "$ref" : "#/definitions/ProductCategory"
+            }
+          },
+          "404" : {
+            "description" : "A category with the specified ID was not found"
+          },
+          "default" : {
+            "description" : "Unexpected error"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "categories" ],
+        "summary" : "Delete a product category by ID.",
+        "description" : "Delete a product by category ID.",
+        "responses" : {
+          "200" : {
+            "description" : "A category was successfuly deleted"
+          },
+          "404" : {
+            "description" : "A category with the specified ID was not found"
+          },
+          "default" : {
+            "description" : "Unexpected error"
+          }
+        }
+      }
     }
   },
   "definitions" : {
