@@ -1,7 +1,7 @@
 {
   "swagger" : "2.0",
   "info" : {
-    "description" : "This is a simple API",
+    "description" : "This is a API for a online store implemented in React",
     "version" : "1.0.0",
     "title" : "Store React API",
     "contact" : {
@@ -18,7 +18,7 @@
     "name" : "auths",
     "description" : "Operation available for users"
   }, {
-    "name" : "baintree",
+    "name" : "braintree",
     "description" : "Secure routes for paymanets"
   }, {
     "name" : "categories",
@@ -696,6 +696,55 @@
           }
         }
       }
+    },
+    "/braintree/getToken/{userId}" : {
+      "get" : {
+        "tags" : [ "braintree" ],
+        "summary" : "Get a token for process payment.",
+        "description" : "Get a token for process payment.",
+        "operationId" : "userTokenBraintree",
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "path",
+          "description" : "user ID",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "A generated token for payment."
+          },
+          "404" : {
+            "description" : "A user with the specified ID was not found"
+          },
+          "default" : {
+            "description" : "Unexpected error"
+          }
+        }
+      }
+    },
+    "/braintree/payment/{userId}" : {
+      "get" : {
+        "tags" : [ "braintree" ],
+        "summary" : "Process payment.",
+        "description" : "Process payment.",
+        "operationId" : "userpaymentBraintree",
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "path",
+          "description" : "user ID",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Payment was sucessfully processed."
+          },
+          "default" : {
+            "description" : "Unexpected error"
+          }
+        }
+      }
     }
   },
   "definitions" : {
@@ -714,7 +763,7 @@
         },
         "email" : {
           "type" : "string",
-          "example" : "hello@gmai.com"
+          "example" : "hello@gmail.com"
         }
       }
     },
