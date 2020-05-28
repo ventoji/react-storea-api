@@ -29,6 +29,9 @@
   }, {
     "name" : "products",
     "description" : "Operation available for handling products on the store"
+  }, {
+    "name" : "users",
+    "description" : "Operation available for users (personal and orders information)"
   } ],
   "schemes" : [ "https" ],
   "paths" : {
@@ -197,18 +200,18 @@
     "/category/{categoryId}/{userId}" : {
       "put" : {
         "tags" : [ "categories" ],
-        "summary" : "Returns a product category by ID.",
-        "description" : "Get a product category",
+        "summary" : "Update a product category name by ID.",
+        "description" : "Update a product category name",
         "parameters" : [ {
           "name" : "categoryId",
           "in" : "path",
-          "description" : "update product category ID",
+          "description" : "Update product category ID",
           "required" : true,
           "type" : "string"
         }, {
           "name" : "userId",
           "in" : "path",
-          "description" : "user admin ID",
+          "description" : "User admin ID",
           "required" : true,
           "type" : "string"
         } ],
@@ -234,13 +237,13 @@
         "parameters" : [ {
           "name" : "categoryId",
           "in" : "path",
-          "description" : "update product category ID",
+          "description" : "Update product category ID",
           "required" : true,
           "type" : "string"
         }, {
           "name" : "userId",
           "in" : "path",
-          "description" : "user admin ID",
+          "description" : "User admin ID",
           "required" : true,
           "type" : "string"
         } ],
@@ -358,6 +361,341 @@
           }
         }
       }
+    },
+    "/product/{productId}" : {
+      "get" : {
+        "tags" : [ "products" ],
+        "summary" : "Returns a product by ID.",
+        "description" : "Get a product information",
+        "operationId" : "product",
+        "parameters" : [ {
+          "name" : "productId",
+          "in" : "path",
+          "description" : "product by ID",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "A Product object.",
+            "schema" : {
+              "$ref" : "#/definitions/Product"
+            }
+          },
+          "404" : {
+            "description" : "A product with the specified ID was not found"
+          },
+          "default" : {
+            "description" : "Unexpected error"
+          }
+        }
+      }
+    },
+    "/product/create/{userId}" : {
+      "post" : {
+        "tags" : [ "products" ],
+        "summary" : "Create a new product only for a user with admin role",
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "path",
+          "description" : "User ID",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "A product object was created",
+            "schema" : {
+              "$ref" : "#/definitions/Product"
+            }
+          },
+          "500" : {
+            "description" : "Internal server error"
+          },
+          "default" : {
+            "description" : "Unexpected error"
+          }
+        }
+      }
+    },
+    "/product/{productId}/{userId}" : {
+      "put" : {
+        "tags" : [ "products" ],
+        "summary" : "Update a product information by ID.",
+        "description" : "Update product information",
+        "parameters" : [ {
+          "name" : "productId",
+          "in" : "path",
+          "description" : "Update product information",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "userId",
+          "in" : "path",
+          "description" : "User admin ID",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "A product was successfuly updated.",
+            "schema" : {
+              "$ref" : "#/definitions/Product"
+            }
+          },
+          "404" : {
+            "description" : "A product with the specified ID was not found"
+          },
+          "default" : {
+            "description" : "Unexpected error"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "products" ],
+        "summary" : "Delete a product by ID.",
+        "description" : "Delete a product by ID.",
+        "parameters" : [ {
+          "name" : "productId",
+          "in" : "path",
+          "description" : "Update product information",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "userId",
+          "in" : "path",
+          "description" : "User admin ID",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "A product was successfuly deleted"
+          },
+          "404" : {
+            "description" : "A product with the specified ID was not found"
+          },
+          "default" : {
+            "description" : "Unexpected error"
+          }
+        }
+      }
+    },
+    "/products" : {
+      "get" : {
+        "tags" : [ "products" ],
+        "summary" : "Return a list of all products.",
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "A List of all products."
+          },
+          "default" : {
+            "description" : "Unexpected error."
+          }
+        }
+      }
+    },
+    "/products/search" : {
+      "get" : {
+        "tags" : [ "products" ],
+        "summary" : "Return a list of all products.",
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "A List of all products according to search value."
+          },
+          "default" : {
+            "description" : "Unexpected error"
+          }
+        }
+      }
+    },
+    "/products/by/search" : {
+      "post" : {
+        "tags" : [ "products" ],
+        "summary" : "Return a list of all products by search.",
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "A List of all products according to search value."
+          },
+          "default" : {
+            "description" : "Unexpected error"
+          }
+        }
+      }
+    },
+    "/products/categories" : {
+      "get" : {
+        "tags" : [ "products" ],
+        "summary" : "Return a list of all categories.",
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "A List of all product categories."
+          },
+          "default" : {
+            "description" : "Unexpected error"
+          }
+        }
+      }
+    },
+    "/products/photo/{productId}" : {
+      "get" : {
+        "tags" : [ "products" ],
+        "summary" : "Return a photo for the product by ID.",
+        "parameters" : [ {
+          "name" : "productId",
+          "in" : "path",
+          "description" : "product by ID",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Return a photo for the product by ID."
+          },
+          "default" : {
+            "description" : "Unexpected error"
+          }
+        }
+      }
+    },
+    "/products/related/{productId}" : {
+      "get" : {
+        "tags" : [ "products" ],
+        "summary" : "Related products for the specified product by ID.",
+        "parameters" : [ {
+          "name" : "productId",
+          "in" : "path",
+          "description" : "Product by ID",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Related products for the specified product by ID."
+          },
+          "default" : {
+            "description" : "Unexpected error"
+          }
+        }
+      }
+    },
+    "/user/{userId}" : {
+      "get" : {
+        "tags" : [ "users" ],
+        "summary" : "Returns a user by ID.",
+        "description" : "Get a user information by ID",
+        "operationId" : "user",
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "path",
+          "description" : "user ID",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "A User object.",
+            "schema" : {
+              "$ref" : "#/definitions/User"
+            }
+          },
+          "404" : {
+            "description" : "A user with the specified ID was not found"
+          },
+          "default" : {
+            "description" : "Unexpected error"
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "users" ],
+        "summary" : "Update user information by ID.",
+        "description" : "Update user information by ID",
+        "operationId" : "userUpdate",
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "path",
+          "description" : "user ID",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "A User object.",
+            "schema" : {
+              "$ref" : "#/definitions/User"
+            }
+          },
+          "404" : {
+            "description" : "A user with the specified ID was not found"
+          },
+          "default" : {
+            "description" : "Unexpected error"
+          }
+        }
+      }
+    },
+    "/secret/{userId}" : {
+      "get" : {
+        "tags" : [ "users" ],
+        "summary" : "Returns a user profile information by ID.",
+        "description" : "Get a user profile information by ID.",
+        "operationId" : "userProfile",
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "path",
+          "description" : "user ID",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "A User object.",
+            "schema" : {
+              "$ref" : "#/definitions/User"
+            }
+          },
+          "404" : {
+            "description" : "A user with the specified ID was not found"
+          },
+          "default" : {
+            "description" : "Unexpected error"
+          }
+        }
+      }
+    },
+    "/orders/by/users/{userId}" : {
+      "get" : {
+        "tags" : [ "users" ],
+        "summary" : "Returns user orders information by user ID.",
+        "description" : "Get user orders information by user ID.",
+        "operationId" : "userOrders",
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "path",
+          "description" : "user ID",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "A Order object.",
+            "schema" : {
+              "$ref" : "#/definitions/OrderSchema"
+            }
+          },
+          "404" : {
+            "description" : "A user with the specified ID was not found"
+          },
+          "default" : {
+            "description" : "Unexpected error"
+          }
+        }
+      }
     }
   },
   "definitions" : {
@@ -414,7 +752,7 @@
       "properties" : {
         "id" : {
           "type" : "string",
-          "example" : "fsfdhdth"
+          "example" : "5ebfe4b422a65c48140d8e23"
         },
         "status" : {
           "type" : "string",
@@ -430,6 +768,70 @@
         },
         "user" : {
           "$ref" : "#/definitions/UserLogin"
+        }
+      }
+    },
+    "Product" : {
+      "type" : "object",
+      "required" : [ "category", "id", "name", "price", "quantity", "shipping", "sold" ],
+      "properties" : {
+        "id" : {
+          "type" : "string",
+          "example" : "5ebfe4b422a65c48140d8e23"
+        },
+        "name" : {
+          "type" : "string",
+          "example" : "Node Cookbook"
+        },
+        "desccription" : {
+          "type" : "string",
+          "example" : "Last version of Node JS"
+        },
+        "price" : {
+          "type" : "number",
+          "example" : 12.0
+        },
+        "category" : {
+          "$ref" : "#/definitions/ProductCategory"
+        },
+        "shipping" : {
+          "type" : "boolean",
+          "example" : false
+        },
+        "quantity" : {
+          "type" : "integer",
+          "example" : 12
+        },
+        "sold" : {
+          "type" : "integer",
+          "example" : 0
+        }
+      }
+    },
+    "User" : {
+      "type" : "object",
+      "required" : [ "email", "id", "name", "password", "role" ],
+      "properties" : {
+        "id" : {
+          "type" : "string",
+          "example" : "5ebfdee15a65c38140f6e1e"
+        },
+        "name" : {
+          "type" : "string",
+          "example" : "Jorge"
+        },
+        "email" : {
+          "type" : "string",
+          "example" : "hello@gmail.com"
+        },
+        "password" : {
+          "type" : "string",
+          "example" : "xxxxxx"
+        },
+        "role" : {
+          "type" : "integer",
+          "example" : 0,
+          "description" : "0 for users 1 for admin users"
         }
       }
     }
