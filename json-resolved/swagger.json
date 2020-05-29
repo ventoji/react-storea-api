@@ -712,7 +712,7 @@
         } ],
         "responses" : {
           "200" : {
-            "description" : "A generated token for payment."
+            "description" : "A generated token for payment process. Owner credentials set in braintree have to be verified."
           },
           "404" : {
             "description" : "A user with the specified ID was not found"
@@ -726,8 +726,8 @@
     "/braintree/payment/{userId}" : {
       "get" : {
         "tags" : [ "braintree" ],
-        "summary" : "Process payment.",
-        "description" : "Process payment.",
+        "summary" : "Process payment method.",
+        "description" : "Process payment method selected by the user. it could be paypal or credit card.",
         "operationId" : "userpaymentBraintree",
         "parameters" : [ {
           "name" : "userId",
